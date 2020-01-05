@@ -1,7 +1,7 @@
 { stdenv, fetchFromGitHub
 , python-with-packages 
 , automake, autoconf, libtool
-, pkgconfig, autoreconfHook
+, pkgconfig, bash, autoreconfHook
 , ocaml, ocamlPackages
 , z3, yices, cvc4  }:
 stdenv.mkDerivation {
@@ -16,12 +16,21 @@ stdenv.mkDerivation {
     ./czmq-configure.patch
    ./libczmq-configure.patch 
   ];
+  preAutoreconf = ''
+	patchShebangs ./autogen.sh
+	patchShebangs ./ocamlczmq/autogen.sh
+	patchShebangs ./ocamlczmq/czmq/version.sh
+	patchShebangs ./build.sh
+	patchShebangs ./ocamlczmq/build.sh
+  '';
   autoreconfPhase = ''
-  ./autogen.sh
+   	runHook preAutoreconf
+   	sh ./autogen.sh
   '';
   buildPhase = ''
+ 	mkdir $out
     export CFLAGS="-Wno-format-security"
-    ./build.sh
+    ./build.sh --prefix=$out
   
   '';
   nativeBuildInputs = [
