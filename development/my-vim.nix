@@ -14,6 +14,10 @@ let
 					"supertab"
 					"vim-nix"
 					"rust-vim"
+					"fugitive"
+					"airline"
+					"jedi-vim"
+					"vimtex"
 				];
 			}
 		];
