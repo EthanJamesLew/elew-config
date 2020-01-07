@@ -17,7 +17,9 @@ let
 					"fugitive"
 					"airline"
 					"jedi-vim"
-					"vimtex"
+                                        "vimtex"
+                                        "ultisnips"
+                                        "vim-snippets"
 				];
 			}
 		];
