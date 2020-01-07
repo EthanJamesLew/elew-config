@@ -4,7 +4,8 @@
 	config = ''
 		set history=700
 		set number
-		set encoding=utf-8
+                set encoding=utf-8
+                set backspace=indent,eol,start
 		
 		let g:tex_flavor='latex'
 		let g:vimtex_view_method='zathura'
