@@ -23,5 +23,9 @@
                 let g:UltiSnipsJumpForwardTrigger = "<tab>"
                 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
+                setlocal spell
+                set spelllang=en
+                inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
 	'';
 }

@@ -20,6 +20,8 @@ let
                                         "vimtex"
                                         "ultisnips"
                                         "vim-snippets"
+                                        "tabular"
+                                        "vim-markdown"
 				];
 			}
 		];

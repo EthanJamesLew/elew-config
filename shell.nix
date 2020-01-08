@@ -2,11 +2,11 @@
 
 let
   pkgs = import <nixpkgs> {};
-  my-vim = with pkgs; (callPackage ./development/my-vim.nix  { 
+  my-vim = with pkgs; (callPackage ./development/vim.nix  { 
     vim_configurable = vim_configurable.override { python = python3; } ; 
   });
                     
-  my-python = pkgs.callPackage ./my-python.nix {};  
+  my-python = pkgs.callPackage ./common/python.nix {};  
   git-prompt = with pkgs; fetchFromGitHub {
     "owner" = "magicmonty";
     "repo" = "bash-git-prompt";
@@ -20,7 +20,7 @@ let
 
   kind2 =  pkgs.callPackage ./verification/kind2.nix { };
 
-  my-latex = pkgs.callPackage ./my-latex.nix {};
+  my-latex = pkgs.callPackage ./common/latex.nix {};
   llvmCross = pkgs.llvmPackages_9.llvm;
   clangCross = pkgs.llvmPackages_9.clang;
   lldCross = pkgs.llvmPackages_9.lld;
