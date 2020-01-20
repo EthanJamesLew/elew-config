@@ -18,23 +18,24 @@
 let
     # the documentation requires a specific LaTeX environment 
     texliveMk = texlive.combine { inherit (texlive) 
-                                  scheme-medium 
-                                  latexmk 
-                                  titlesec 
-                                  tabulary 
-                                  varwidth 
-                                  framed 
-                                  wrapfig 
-                                  upquote 
-                                  capt-of 
-                                  needspace 
-                                  tocloft 
-                                  datetime 
-                                  lastpage 
-                                  blindtext 
-                                  xpatch 
-                                  enumitem 
-                                  fmtcount; };
+      scheme-medium 
+      latexmk 
+      titlesec 
+      tabulary 
+      varwidth 
+      framed 
+      wrapfig 
+      upquote 
+      capt-of 
+      needspace 
+      tocloft 
+      datetime 
+      lastpage 
+      blindtext 
+      xpatch 
+      enumitem 
+      fmtcount; 
+    };
 in stdenv.mkDerivation {
   
   pname = "kind2";

@@ -2,27 +2,35 @@
 
 let
   pkgs = import <nixpkgs> {};
+  sources = import ./nix/sources.nix {}; 
+  nur = pkgs.callPackage sources.NUR {};
+  
+  nix-rls = pkgs.callPackage ./nix/nix-rls.nix {};
+  
   my-vim = with pkgs; (callPackage ./development/vim.nix  { 
-    vim_configurable = vim_configurable.override { python = python3; } ; 
+  vim_configurable = vim_configurable.override { python = python3; } ; 
   });
                     
   my-python = pkgs.callPackage ./common/python.nix {};  
-  git-prompt = with pkgs; fetchFromGitHub {
-    "owner" = "magicmonty";
-    "repo" = "bash-git-prompt";
-    "rev" = "148d502b666a0d62ecc83680817596b097a70f2a";
-    "sha256" = "0xdyyc0lvfrxg9bgmiy4h22y0wp6x3yn6md6jy2f7kcw8dww9pyz";
-  };
+  
+
+  rustVersion = nur.repos.mozilla.latest.rustChannels.stable;
+
+  git-prompt = pkgs.callPackage ./common/git-prompt.nix {};
   
   # Use Ocaml 4.04
-  my-ocaml = pkgs.ocaml-ng.ocamlPackages_4_04.ocaml;
-  my-ocaml-packages = pkgs.ocaml-ng.ocamlPackages_4_04;
+  my-ocaml = pkgs.ocaml-ng.ocamlPackages.ocaml;
+  
+  my-ocaml-packages = pkgs.ocaml-ng.ocamlPackages;
 
   kind2 =  pkgs.callPackage ./verification/kind2.nix { };
 
   my-latex = pkgs.callPackage ./common/latex.nix {};
+  
   llvmCross = pkgs.llvmPackages_9.llvm;
+  
   clangCross = pkgs.llvmPackages_9.clang;
+  
   lldCross = pkgs.llvmPackages_9.lld;
 in 
   with pkgs; mkShell {
@@ -30,7 +38,13 @@ in
             
       # Basics
       my-python
+
+      ## Vim Stuff
       my-vim
+      rustVersion.rust
+      rustPackages.rls
+      nix-rls
+      
       tmux
             
       #Kind2 Setup
@@ -50,6 +64,9 @@ in
       my-ocaml-packages.menhir
       my-ocaml-packages.num
       my-ocaml-packages.yojson
+      my-ocaml-packages.utop
+      my-ocaml-packages.core
+      my-ocaml-packages.core_bench
 
       # Latex Setup
       zathura
@@ -61,13 +78,14 @@ in
       clangCross
       lldCross
 
+      # Rust 
+      rustc
+      cargo
+      rustup
+
+
     ];
     
     shellHook = "source ${git-prompt}/gitprompt.sh";
-
-    XCC = "${clangCross}/bin/clang";
-    XCPP = "${clangCross}/bin/clang-cpp";
-    XCXX = "${clangCross}/bin/clang++"; 
-    XLD = "${lldCross}/bin/ld.lld";
-  
+    
   }

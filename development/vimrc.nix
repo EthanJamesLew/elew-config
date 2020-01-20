@@ -27,5 +27,17 @@
                 set spelllang=en
                 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
+                let g:LanguageClient_autoStart = 1 
+                let g:LanguageClient_serverCommands = {
+                  \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+                  \ 'nix': ['rnix-lsp']      
+                \ }
+
+
+                nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+                " Or map each action separately
+                nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+                nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+                nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 	'';
 }
