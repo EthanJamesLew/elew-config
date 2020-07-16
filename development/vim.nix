@@ -31,8 +31,8 @@ let
 				names = [
 					"ctrlp"
 					"gitgutter"
-					"youcompleteme"
-					"vundle"
+					"YouCompleteMe"
+					"Vundle-vim"
 					"supertab"
 					"vim-nix"
                                         "rust-vim"
